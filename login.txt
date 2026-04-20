@@ -1,0 +1,6 @@
+admin admin123 admin
+rizal rizal123 user
+budi budi123 user
+dosen pass123 admin
+
+alea 1234 user
