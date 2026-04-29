@@ -1,4 +1,100 @@
-2112,Reality Club,230
-33x,Perunggu,200
-separuh nafas,dewa19,190
-abadi,dewa,200
+Bohemian Rhapsody,Queen,Rock,354
+Shape of You,Ed Sheeran,Pop,233
+Blinding Lights,The Weeknd,Synthwave,200
+Hotel California,Eagles,Classic Rock,391
+Smells Like Teen Spirit,Nirvana,Grunge,301
+Imagine,John Lennon,Soft Rock,183
+Someone Like You,Adele,Soul,285
+Rolling in the Deep,Adele,Soul,228
+Stay,The Kid LAROI,Pop,141
+Peaches,Justin Bieber,Pop,198
+Levitating,Dua Lipa,Nu-Disco,203
+Bad Guy,Billie Eilish,Electropop,194
+Happier,Marshmello,Electronic,214
+Wake Me Up,Avicii,Dance,247
+Counting Stars,OneRepublic,Pop Rock,257
+All of Me,John Legend,R&B,269
+Perfect,Ed Sheeran,Pop,263
+Thinking Out Loud,Ed Sheeran,Blue-eyed Soul,281
+Uptown Funk,Mark Ronson,Funk,270
+Happy,Pharrell Williams,Soul,233
+Lose Yourself,Eminem,Hip Hop,326
+Godzilla,Eminem,Hip Hop,210
+Mockingbird,Eminem,Hip Hop,250
+Rap God,Eminem,Hip Hop,364
+Sicko Mode,Travis Scott,Hip Hop,312
+Humble,Kendrick Lamar,Hip Hop,177
+DNA,Kendrick Lamar,Hip Hop,185
+Circles,Post Malone,Pop Rock,215
+Rockstar,Post Malone,Hip Hop,218
+Sunflower,Post Malone,Pop,158
+Better Now,Post Malone,Pop,231
+Thunder,Imagine Dragons,Electropop,187
+Believer,Imagine Dragons,Pop Rock,204
+Radioactive,Imagine Dragons,Electronic Rock,186
+Enemy,Imagine Dragons,Pop Rock,173
+Yellow,Coldplay,Alt Rock,266
+Fix You,Coldplay,Alt Rock,295
+The Scientist,Coldplay,Alt Rock,309
+Viva La Vida,Coldplay,Baroque Pop,242
+Adventure of a Lifetime,Coldplay,Disco,264
+Numb,Linkin Park,Nu Metal,187
+In the End,Linkin Park,Nu Metal,216
+Crawling,Linkin Park,Nu Metal,209
+Faint,Linkin Park,Nu Metal,162
+One Step Closer,Linkin Park,Nu Metal,157
+Sweet Child O Mine,Guns N Roses,Hard Rock,356
+November Rain,Guns N Roses,Hard Rock,537
+Paradise City,Guns N Roses,Hard Rock,406
+Back in Black,AC/DC,Hard Rock,255
+Thunderstruck,AC/DC,Hard Rock,292
+Highway to Hell,AC/DC,Hard Rock,208
+Enter Sandman,Metallica,Heavy Metal,331
+Nothing Else Matters,Metallica,Heavy Metal,388
+Master of Puppets,Metallica,Heavy Metal,515
+Stairway to Heaven,Led Zeppelin,Prog Rock,482
+Black Dog,Led Zeppelin,Hard Rock,296
+Kashmir,Led Zeppelin,Prog Rock,512
+Dream On,Aerosmith,Hard Rock,268
+Walk This Way,Aerosmith,Hard Rock,220
+Crazy,Aerosmith,Blues Rock,316
+Creep,Radiohead,Alt Rock,238
+Karma Police,Radiohead,Alt Rock,261
+No Surprises,Radiohead,Alt Rock,228
+Seven Nation Army,The White Stripes,Garage Rock,231
+Hells Bells,AC/DC,Hard Rock,312
+Under the Bridge,Red Hot Chili Peppers,Alt Rock,264
+Californication,Red Hot Chili Peppers,Alt Rock,321
+Otherside,Red Hot Chili Peppers,Alt Rock,255
+By the Way,Red Hot Chili Peppers,Funk Rock,217
+Sultans of Swing,Dire Straits,Roots Rock,348
+Every Breath You Take,The Police,New Wave,253
+Roxanne,The Police,Reggae Rock,192
+Message in a Bottle,The Police,New Wave,291
+Billie Jean,Michael Jackson,Pop,294
+Thriller,Michael Jackson,Pop,357
+Beat It,Michael Jackson,Pop,258
+Smooth Criminal,Michael Jackson,Pop,257
+Purple Rain,Prince,Pop,520
+Kiss,Prince,Funk,226
+When Doves Cry,Prince,Pop,352
+Like a Prayer,Madonna,Pop,341
+Vogue,Madonna,House,289
+Material Girl,Madonna,Synthpop,240
+Toxic,Britney Spears,Dance Pop,198
+Baby One More Time,Britney Spears,Teen Pop,210
+Oops I Did It Again,Britney Spears,Teen Pop,211
+Firework,Katy Perry,Pop,227
+Roar,Katy Perry,Pop,223
+Dark Horse,Katy Perry,Trap,215
+Bad Romance,Lady Gaga,Dance Pop,294
+Poker Face,Lady Gaga,Synthpop,237
+Shallow,Lady Gaga,Country Pop,215
+Just Dance,Lady Gaga,Electropop,241
+Drivers License,Olivia Rodrigo,Bedroom Pop,242
+Good 4 U,Olivia Rodrigo,Pop Punk,178
+Vampire,Olivia Rodrigo,Pop,219
+Heat Waves,Glass Animals,Indie Pop,238
+As It Was,Harry Styles,Synthpop,167
+Watermelon Sugar,Harry Styles,Pop,174
+Adore You,Harry Styles,Pop,207
