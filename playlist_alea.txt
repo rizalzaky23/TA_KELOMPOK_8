@@ -1,2 +1,2 @@
-Material Girl,Madonna,Synthpop,240
-Perfect,Ed Sheeran,Pop,263
+material girl,madonna,synthpop,240
+perfect,ed sheeran,pop,263

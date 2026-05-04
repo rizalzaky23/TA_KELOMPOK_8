@@ -1,4 +1,5 @@
-Adore You,Harry Styles,Pop,207
-Kiss,Prince,Funk,226
-Godzilla,Eminem,Hip Hop,210
-All of Me,John Legend,R&B,269
+adore you,harry styles,pop,207
+kiss,prince,funk,226
+godzilla,eminem,hip hop,210
+all of me,john legend,r&b,269kiss,prince,funk,226
+numb,linkin park,nu metal,187

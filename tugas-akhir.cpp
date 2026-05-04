@@ -25,10 +25,11 @@ lagu* tail = NULL;
 
 void clearScreen() {
     system("cls");
+    system("clear");
 }
 
 void pauseScreen() {
-    cout << "\nTekan Enter untuk melanjutkan...";
+    cout << endl << "Tekan Enter untuk melanjutkan...";
     cin.ignore();
     cin.get();
 }
@@ -83,18 +84,18 @@ void tambahLagu() {
         fclose(fileLagu);
     }
 
-    cout << "\n Lagu '" << inputJudul << "' berhasil ditambahkan!" << endl;
+    cout << endl << " Lagu '" << inputJudul << "' berhasil ditambahkan!" << endl;
     pauseScreen();
 }
 
 void lihatLagu() {
     clearScreen();
-    cout << "=================================================================================" << endl;
-    cout << "                                 DAFTAR SEMUA LAGU                               " << endl;
-    cout << "=================================================================================" << endl;
+    cout << "======================================================================" << endl;
+    cout << "                            DAFTAR SEMUA LAGU                         " << endl;
+    cout << "======================================================================" << endl;
 
     if (head == NULL) {
-        cout << "\n[!] Playlist saat ini masih kosong." << endl;
+        cout << endl << "[!] Playlist saat ini masih kosong." << endl;
         pauseScreen();
         return;
     }
@@ -129,7 +130,7 @@ void cariLagu() {
     lagu* temp = head;
     bool ketemu = false;
 
-    cout << "\n--- Hasil Pencarian ---" << endl;
+    cout << endl << "--- Hasil Pencarian ---" << endl;
     cout << left << setw(25) << "JUDUL LAGU" << setw(20) << "ARTIS" << setw(15) << "GENRE" << "DURASI" << endl;
     cout << "---------------------------------------------------------------------------------" << endl;
 
@@ -175,9 +176,9 @@ void quickSortArray(lagu arr[], int low, int high) {
 
 void urutLagu() {
     clearScreen();
-    cout << "=================================================================================" << endl;
-    cout << "                            LIHAT LAGU TERURUT (JUDUL)                           " << endl;
-    cout << "=================================================================================" << endl;
+    cout << "=======================================================================" << endl;
+    cout << "                         LIHAT LAGU TERURUT (JUDUL)                    " << endl;
+    cout << "=======================================================================" << endl;
 
     if (head == NULL) {
         cout << "\n[!] Playlist masih kosong." << endl;
@@ -208,9 +209,9 @@ void urutLagu() {
 
 void hapusLagu() {
     clearScreen();
-    cout << "===============================================================" << endl;
+    cout << "=========================================================" << endl;
     cout << "                          HAPUS LAGU                           " << endl;
-    cout << "===============================================================" << endl;
+    cout << "=========================================================" << endl;
 
     if (head == NULL) {
         cout << "\n Playlist kosong." << endl;
@@ -306,14 +307,76 @@ void tambahPlaylist(string username) {
     pauseScreen();
 }
 
+void playLagu(lagu* headPlaylist) {
+    if (headPlaylist == NULL) {
+        cout << "\n[!] Tidak ada lagu untuk diputar." << endl;
+        pauseScreen();
+        return;
+    }
+
+    lagu* current = headPlaylist;
+    char input;
+    string pesan = "";
+
+    do {
+        clearScreen();
+        cout << "=================================================================================" << endl;
+        cout << "                              NOW PLAYING                                        " << endl;
+        cout << "=================================================================================" << endl;
+        cout << "\n  >> " << current->judul << endl;
+        cout << "     Artis  : " << current->artis << endl;
+        cout << "     Genre  : " << current->genre << endl;
+        cout << "     Durasi : " << formatDuration(current->durasi) << endl;
+        cout << "\n---------------------------------------------------------------------------------" << endl;
+
+        if (current->prev != NULL)
+            cout << "  << PREV: " << current->prev->judul << endl;
+        else
+            cout << "  << PREV: (awal playlist)" << endl;
+
+        if (current->next != NULL)
+            cout << "  >> NEXT: " << current->next->judul << endl;
+        else
+            cout << "  >> NEXT: (akhir playlist)" << endl;
+
+        cout << "---------------------------------------------------------------------------------" << endl;
+        cout << "  [N] Next   [P] Previous   [Q] Quit" << endl;
+
+        if (pesan != "") {
+            cout << "\n  [!] " << pesan << "\n" << endl;
+            pesan = "";
+        }
+
+        cout << "  Input: ";
+        cin >> input;
+        input = tolower(input);
+
+        if (input == 'n') {
+            if (current->next != NULL)
+                current = current->next;
+            else
+                pesan = "Ini adalah lagu terakhir, tidak ada lagu berikutnya.";
+        } else if (input == 'p') {
+            if (current->prev != NULL)
+                current = current->prev;
+            else
+                pesan = "Ini adalah lagu pertama, tidak ada lagu sebelumnya.";
+        } else if (input != 'q') {
+            pesan = "Input tidak valid. Gunakan N, P, atau Q.";
+        }
+
+    } while (input != 'q');
+}
+
+
 void lihatPlaylistPribadi(string username) {
     clearScreen();
     string fileName = "playlist_" + username + ".txt";
     FILE* file = fopen(fileName.c_str(), "r");
 
-    cout << "=================================================================================" << endl;
-    cout << "                            PLAYLIST PRIBADI: " << username << endl;
-    cout << "=================================================================================" << endl;
+    cout << "========================================================================" << endl;
+    cout << "                        PLAYLIST PRIBADI: " << username << endl;
+    cout << "========================================================================" << endl;
 
     if (file == NULL) {
         cout << "\n[!] Playlist pribadi Anda masih kosong." << endl;
@@ -325,28 +388,254 @@ void lihatPlaylistPribadi(string username) {
     int fDurasi;
     bool adaLagu = false;
 
+    
+    lagu* headPribadi = NULL;
+    lagu* tailPribadi = NULL;
+
     cout << left << setw(25) << "JUDUL LAGU" << setw(20) << "ARTIS" << setw(15) << "GENRE" << "DURASI" << endl;
     cout << "---------------------------------------------------------------------------------" << endl;
 
     while (fscanf(file, " %[^,],%[^,],%[^,],%d", fJudul, fArtis, fGenre, &fDurasi) != EOF) {
         cout << left << setw(25) << fJudul << setw(20) << fArtis << setw(15) << fGenre << formatDuration(fDurasi) << endl;
+
+        
+        lagu* node = new lagu;
+        node->judul = fJudul;
+        node->artis = fArtis;
+        node->genre = fGenre;
+        node->durasi = fDurasi;
+        node->next = NULL;
+        node->prev = NULL;
+
+        if (headPribadi == NULL) {
+            headPribadi = node;
+            tailPribadi = node;
+        } else {
+            tailPribadi->next = node;
+            node->prev = tailPribadi;
+            tailPribadi = node;
+        }
+
         adaLagu = true;
     }
     fclose(file);
 
-    if (!adaLagu) cout << "Playlist kosong." << endl;
+    if (!adaLagu) {
+        cout << "Playlist kosong." << endl;
+        cout << "---------------------------------------------------------------------------------" << endl;
+        pauseScreen();
+        return;
+    }
+
     cout << "---------------------------------------------------------------------------------" << endl;
-    pauseScreen();
+
+    cout << "\nTekan Enter untuk mulai memutar playlist...";
+    cin.ignore();
+    cin.get();
+
+    playLagu(headPribadi);
+
+    
+    lagu* curr = headPribadi;
+    while (curr != NULL) {
+        lagu* next = curr->next;
+        delete curr;
+        curr = next;
+    }
 }
+
+void playLaguGenre(lagu* laguDipilih) {
+   
+    lagu* headGenre = NULL;
+    lagu* tailGenre = NULL;
+    lagu* startNode = NULL;
+
+    lagu* temp = head;
+    while (temp != NULL) {
+        if (temp->genre == laguDipilih->genre) {
+            lagu* node = new lagu;
+            node->judul = temp->judul;
+            node->artis = temp->artis;
+            node->genre = temp->genre;
+            node->durasi = temp->durasi;
+            node->next = NULL;
+            node->prev = NULL;
+
+            if (headGenre == NULL) {
+                headGenre = node;
+                tailGenre = node;
+            } else {
+                tailGenre->next = node;
+                node->prev = tailGenre;
+                tailGenre = node;
+            }
+
+      
+            if (node->judul == laguDipilih->judul && startNode == NULL) {
+                startNode = node;
+            }
+        }
+        temp = temp->next;
+    }
+
+    if (startNode == NULL) startNode = headGenre;
+
+    lagu* current = startNode;
+    char input;
+    string pesan = "";
+
+    do {
+        clearScreen();
+        cout << "====================================================================" << endl;
+        cout << "                              NOW PLAYING                           " << endl;
+        cout << "====================================================================" << endl;
+        cout << "\n  >> " << current->judul << endl;
+        cout << "     Artis  : " << current->artis << endl;
+        cout << "     Genre  : " << current->genre << endl;
+        cout << "     Durasi : " << formatDuration(current->durasi) << endl;
+        cout << "\n  * Memutar lagu genre: " << current->genre << endl;
+        cout << "\n---------------------------------------------------------------------------------" << endl;
+
+        if (current->prev != NULL)
+            cout << "  << PREV: " << current->prev->judul << endl;
+        else
+            cout << "  << PREV: (awal genre)" << endl;
+
+        if (current->next != NULL)
+            cout << "  >> NEXT: " << current->next->judul << endl;
+        else
+            cout << "  >> NEXT: (akhir genre)" << endl;
+
+        cout << "---------------------------------------------------------------------------------" << endl;
+        cout << "  [N] Next   [P] Previous   [Q] Quit" << endl;
+
+        if (pesan != "") {
+            cout << "\n  [!] " << pesan << "\n" << endl;
+            pesan = "";
+        }
+
+        cout << "  Input: ";
+        cin >> input;
+        input = tolower(input);
+
+        if (input == 'n') {
+            if (current->next != NULL)
+                current = current->next;
+            else
+                pesan = "Ini adalah lagu terakhir dalam genre " + current->genre + ".";
+        } else if (input == 'p') {
+            if (current->prev != NULL)
+                current = current->prev;
+            else
+                pesan = "Ini adalah lagu pertama dalam genre " + current->genre + ".";
+        } else if (input != 'q') {
+            pesan = "Input tidak valid. Gunakan N, P, atau Q.";
+        }
+
+    } while (input != 'q');
+
+
+    lagu* curr = headGenre;
+    while (curr != NULL) {
+        lagu* next = curr->next;
+        delete curr;
+        curr = next;
+    }
+}
+
+void cariLaguUser() {
+    string kataKunci;
+    clearScreen();
+    cout << "========================================================================" << endl;
+    cout << "                             CARI LAGU (USER)                           " << endl;
+    cout << "========================================================================" << endl;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Masukkan Judul, Artis, atau Genre: ";
+    getline(cin, kataKunci);
+
+
+    lagu* hasilCari[500];
+    int jumlahHasil = 0;
+
+    lagu* temp = head;
+    while (temp != NULL && jumlahHasil < 500) {
+        if (temp->judul.find(kataKunci) != string::npos ||
+            temp->artis.find(kataKunci) != string::npos ||
+            temp->genre.find(kataKunci) != string::npos) {
+            hasilCari[jumlahHasil] = temp;
+            jumlahHasil++;
+        }
+        temp = temp->next;
+    }
+
+    cout << "\n--- Hasil Pencarian ---" << endl;
+    cout << left << setw(5) << "NO"
+         << setw(25) << "JUDUL LAGU"
+         << setw(20) << "ARTIS"
+         << setw(15) << "GENRE"
+         << "DURASI" << endl;
+    cout << "---------------------------------------------------------------------------------" << endl;
+
+    if (jumlahHasil == 0) {
+        cout << "Lagu tidak ditemukan." << endl;
+        cout << "---------------------------------------------------------------------------------" << endl;
+        pauseScreen();
+        return;
+    }
+
+    for (int i = 0; i < jumlahHasil; i++) {
+        cout << left << setw(5) << (i + 1)
+             << setw(25) << hasilCari[i]->judul
+             << setw(20) << hasilCari[i]->artis
+             << setw(15) << hasilCari[i]->genre
+             << formatDuration(hasilCari[i]->durasi) << endl;
+    }
+    cout << "---------------------------------------------------------------------------------" << endl;
+
+    cout << "\nPilih nomor lagu untuk diputar, atau 0 untuk kembali: ";
+    int pilih;
+    cin >> pilih;
+
+    if (pilih < 1 || pilih > jumlahHasil) {
+        if (pilih != 0) cout << "\n[!] Nomor tidak valid." << endl;
+        pauseScreen();
+        return;
+    }
+
+    
+    char opsi;
+    clearScreen();
+    cout << "=======================================================================" << endl;
+    cout << "                              LAGU DIPILIH                             " << endl;
+    cout << "=======================================================================" << endl;
+    cout << "\n  Judul  : " << hasilCari[pilih - 1]->judul << endl;
+    cout << "  Artis  : " << hasilCari[pilih - 1]->artis << endl;
+    cout << "  Genre  : " << hasilCari[pilih - 1]->genre << endl;
+    cout << "  Durasi : " << formatDuration(hasilCari[pilih - 1]->durasi) << endl;
+    cout << "\n  Lagu berikutnya akan diambil dari genre: " << hasilCari[pilih - 1]->genre << endl;
+    cout << "\n---------------------------------------------------------------------------------" << endl;
+    cout << "  [P] Play   [Q] Quit" << endl;
+    cout << "  Input: ";
+    cin >> opsi;
+    opsi = tolower(opsi);
+
+    if (opsi == 'p') {
+        playLaguGenre(hasilCari[pilih - 1]);
+    } else {
+        pauseScreen();
+    }
+}
+
 
 void urutkanPlaylistPribadi(string username) {
     clearScreen();
     string fileName = "playlist_" + username + ".txt";
     FILE* file = fopen(fileName.c_str(), "r");
 
-    cout << "=================================================================================" << endl;
-    cout << "                      URUTKAN PLAYLIST PRIBADI (JUDUL)                           " << endl;
-    cout << "=================================================================================" << endl;
+    cout << "================================================================" << endl;
+    cout << "                    URUTKAN PLAYLIST PRIBADI (JUDUL)            " << endl;
+    cout << "================================================================" << endl;
 
     if (file == NULL) {
         cout << "\n[!] Playlist pribadi Anda masih kosong." << endl;
@@ -400,7 +689,7 @@ void menuUser(string username) {
             case 1: lihatLagu(); break;
             case 2: lihatPlaylistPribadi(username); break;
             case 3: tambahPlaylist(username); break;
-            case 4: cariLagu(); break;
+            case 4: cariLaguUser(); break;
             case 5: urutLagu(); break;
             case 6: urutkanPlaylistPribadi(username); break;
             case 7: hapusLagu(); break;
