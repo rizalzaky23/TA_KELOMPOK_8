@@ -1,9 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <stdlib.h>
-#include <sstream>
-#include <limits>
-#include <string>
+
 
 using namespace std;
 
@@ -39,9 +37,20 @@ void pauseScreen() {
 string formatDuration(int seconds) {
     int min = seconds / 60;
     int sec = seconds % 60;
-    stringstream ss;
-    ss << setfill('0') << setw(2) << min << ":" << setfill('0') << setw(2) << sec;
-    return ss.str();
+
+    string hasil = "";
+
+    if (min < 10)
+        hasil += "0";
+    hasil += to_string(min);
+
+    hasil += ":";
+
+    if (sec < 10)
+        hasil += "0";
+    hasil += to_string(sec);
+
+    return hasil;
 }
 
 void tambahLagu() {
@@ -208,6 +217,84 @@ void urutLagu() {
     cout << "---------------------------------------------------------------------------------" << endl;
     pauseScreen();
 }
+
+void editLagu() {
+    clearScreen();
+    cout << "=========================================================" << endl;
+    cout << "                        EDIT LAGU                        " << endl;
+    cout << "=========================================================" << endl;
+
+    if (head == NULL) {
+        cout << endl << " Playlist kosong." << endl;
+        pauseScreen();
+        return;
+    }
+
+    string judulCari;
+    cin.ignore();
+    cout << "Masukkan Judul Lagu yang ingin diedit: ";
+    getline(cin, judulCari);
+
+    lagu* bantu = head;
+    bool ketemu = false;
+
+    while (bantu != NULL) {
+        if (bantu->judul == judulCari) {
+            ketemu = true;
+            break;
+        }
+        bantu = bantu->next;
+    }
+
+    if (!ketemu) {
+        cout << endl << " Lagu tidak ditemukan." << endl;
+        pauseScreen();
+        return;
+    }
+
+    cout << endl << " Data lagu saat ini:" << endl;
+    cout << "  Judul  : " << bantu->judul << endl;
+    cout << "  Artis  : " << bantu->artis << endl;
+    cout << "  Genre  : " << bantu->genre << endl;
+    cout << "  Durasi : " << formatDuration(bantu->durasi) << endl;
+
+    cout << endl << " Masukkan data baru (kosongkan jika tidak ingin diubah):" << endl;
+
+    string inputBaru;
+    int durasiInput;
+
+    cout << "Judul baru     : ";
+    getline(cin, inputBaru);
+    if (!inputBaru.empty()) bantu->judul = inputBaru;
+
+    cout << "Artis baru     : ";
+    getline(cin, inputBaru);
+    if (!inputBaru.empty()) bantu->artis = inputBaru;
+
+    cout << "Genre baru     : ";
+    getline(cin, inputBaru);
+    if (!inputBaru.empty()) bantu->genre = inputBaru;
+
+    cout << "Durasi baru (detik, 0 jika tidak diubah): ";
+    cin >> durasiInput;
+    if (durasiInput > 0) bantu->durasi = durasiInput;
+
+    FILE* fileOut = fopen("playlist.txt", "w");
+    if (fileOut != NULL) {
+        lagu* temp = head;
+        while (temp != NULL) {
+            fprintf(fileOut, "%s,%s,%s,%d\n",
+                temp->judul.c_str(), temp->artis.c_str(),
+                temp->genre.c_str(), temp->durasi);
+            temp = temp->next;
+        }
+        fclose(fileOut);
+    }
+
+    cout << endl << " Lagu berhasil diperbarui!" << endl;
+    pauseScreen();
+}
+
 
 void hapusLagu() {
     clearScreen();
@@ -546,7 +633,7 @@ void cariLaguUser() {
     cout << "                              CARI LAGU (USER)                          " << endl;
     cout << "========================================================================" << endl;
 
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(1000, '\n');
     cout << "Masukkan Judul, Artis, atau Genre: ";
     getline(cin, kataKunci);
 
@@ -746,15 +833,24 @@ void menuUser(string username) {
         cout << "Pilih Menu : "; cin >> pilihMenu;
 
         switch(pilihMenu) {
-            case 1: lihatLagu(); break;
-            case 2: lihatPlaylistPribadi(username); break;
-            case 3: tambahPlaylist(username); break;
-            case 4: cariLaguUser(); break;
-            case 5: urutLagu(); break;
-            case 6: urutkanPlaylistPribadi(username); break;
-            case 7: hapusLaguPlaylist(username); break;
-            case 0: return;
-            default : cout << "Pilihan tidak valid" << endl; pauseScreen();
+            case 1: lihatLagu(); 
+            break;
+            case 2: lihatPlaylistPribadi(username); 
+            break;
+            case 3: tambahPlaylist(username); 
+            break;
+            case 4: cariLaguUser(); 
+            break;
+            case 5: urutLagu(); 
+            break;
+            case 6: urutkanPlaylistPribadi(username); 
+            break;
+            case 7: hapusLaguPlaylist(username); 
+            break;
+            case 0: 
+            return;
+            default : cout << "Pilihan tidak valid" << endl; 
+            pauseScreen();
         }
     } while(pilihMenu != 0);
 }
@@ -770,18 +866,28 @@ void menuAdmin() {
         cout << "2. Lihat Lagu" << endl;
         cout << "3. Cari Lagu" << endl;
         cout << "4. Urutkan Lagu" << endl;
-        cout << "5. Hapus Lagu" << endl;
+        cout << "5. Edit Lagu" << endl;
+        cout << "6. Hapus Lagu" << endl;
         cout << "0. Kembali" << endl;
         cout << "Pilih Menu : "; cin >> pilihMenu;
 
         switch(pilihMenu) {
-            case 1: tambahLagu(); break;
-            case 2: lihatLagu(); break;
-            case 3: cariLagu(); break;
-            case 4: urutLagu(); break;
-            case 5: hapusLagu(); break;
-            case 0: return;
-            default : cout << "Pilihan tidak valid" << endl; pauseScreen();
+            case 1: tambahLagu(); 
+            break;
+            case 2: lihatLagu(); 
+            break;
+            case 3: cariLagu(); 
+            break;
+            case 4: urutLagu(); 
+            break;
+            case 5: editLagu();
+            break;
+            case 6: hapusLagu(); 
+            break;
+            case 0: 
+            return;
+            default : cout << "Pilihan tidak valid" << endl; 
+            pauseScreen();
         }
     } while(pilihMenu != 0);
 }
@@ -909,10 +1015,14 @@ void menuLoginUser() {
         cout << "Pilih : "; cin >> pilihLogin;
 
         switch(pilihLogin) {
-            case 1: loginUser(); break;
-            case 2: registerUser(); break;
-            case 3: return;
-            default : cout << "Pilihan tidak valid" << endl; pauseScreen();
+            case 1: loginUser(); 
+            break;
+            case 2: registerUser(); 
+            break;
+            case 3: 
+            return;
+            default : cout << "Pilihan tidak valid" << endl; 
+            pauseScreen();
         }
     } while(pilihLogin != 3);
 }
@@ -959,10 +1069,14 @@ int main() {
         cout << "Pilih : "; cin >> pilihLogin;
 
         switch(pilihLogin) {
-            case 1 : loginAdmin(); break;
-            case 2 : menuLoginUser(); break;
-            case 3 : cout << "Selamat Tinggal :)" << endl; return 0;
-            default : cout << "Pilihan tidak valid" << endl; pauseScreen();
+            case 1 : loginAdmin(); 
+            break;
+            case 2 : menuLoginUser(); 
+            break;
+            case 3 : cout << "Selamat Tinggal :)" << endl; 
+            return 0;
+            default : cout << "Pilihan tidak valid" << endl; 
+            pauseScreen();
         }
     } while(pilihLogin != 3);
     return 0;
