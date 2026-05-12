@@ -815,6 +815,54 @@ void hapusLaguPlaylist(string username) {
     pauseScreen();
 }
 
+void gantiPassword(string username) {
+    string pwLama, pwBaru;
+    clearScreen();
+    cout << "==============================" << endl;
+    cout << "       Ganti Password         " << endl;
+    cout << "==============================" << endl;
+    cout << "Masukkan Password Lama: "; cin >> pwLama;
+
+    FILE* file = fopen("login.txt", "r");
+    if (file == NULL) return;
+
+    struct UserData {
+        string user, pass, role;
+    };
+    UserData users[100];
+    int count = 0;
+    char fUser[50], fPass[50], fRole[50];
+    bool valid = false;
+
+    while (fscanf(file, "%s %s %s", fUser, fPass, fRole) != EOF) {
+        users[count].user = fUser;
+        users[count].pass = fPass;
+        users[count].role = fRole;
+        if (users[count].user == username && users[count].pass == pwLama) {
+            valid = true;
+        }
+        count++;
+    }
+    fclose(file);
+
+    if (valid) {
+        cout << "Masukkan Password Baru: "; cin >> pwBaru;
+        FILE* fileUpdate = fopen("login.txt", "w");
+        for (int i = 0; i < count; i++) {
+            if (users[i].user == username) {
+                fprintf(fileUpdate, "%s %s %s\n", users[i].user.c_str(), pwBaru.c_str(), users[i].role.c_str());
+            } else {
+                fprintf(fileUpdate, "%s %s %s\n", users[i].user.c_str(), users[i].pass.c_str(), users[i].role.c_str());
+            }
+        }
+        fclose(fileUpdate);
+        cout << "\nPassword berhasil diperbarui!" << endl;
+    } else {
+        cout << "\nPassword lama salah!" << endl;
+    }
+    pauseScreen();
+}
+
 void menuUser(string username) {
     int pilihMenu;
     do {
@@ -829,6 +877,7 @@ void menuUser(string username) {
         cout << "5. Urutkan Lagu" << endl;
         cout << "6. Urutkan Playlist Pribadi" << endl;
         cout << "7. Hapus Lagu di Playlist" << endl;
+        cout << "8. Ganti Password" << endl;
         cout << "0. Kembali" << endl;
         cout << "Pilih Menu : "; cin >> pilihMenu;
 
@@ -847,6 +896,8 @@ void menuUser(string username) {
             break;
             case 7: hapusLaguPlaylist(username); 
             break;
+            case 8: gantiPassword(username);
+            break;
             case 0: 
             return;
             default : cout << "Pilihan tidak valid" << endl; 
@@ -860,7 +911,7 @@ void menuAdmin() {
     do {
         clearScreen();
         cout << "===============================" << endl;
-        cout << "           MENU ADMIN          " << endl;
+        cout << "            MENU ADMIN          " << endl;
         cout << "===============================" << endl;
         cout << "1. Tambah Lagu" << endl;
         cout << "2. Lihat Lagu" << endl;
@@ -896,7 +947,7 @@ void loginUser() {
     string logUser, logPw;
     clearScreen();
     cout << "==============================" << endl;
-    cout << "           Login User         " << endl;
+    cout << "            Login User         " << endl;
     cout << "==============================" << endl;
     cin.ignore();
     cout << "Username : "; getline(cin, logUser);
@@ -933,7 +984,7 @@ void registerUser() {
     string regUser, regPw;
     clearScreen();
     cout << "==============================" << endl;
-    cout << "           Register User       " << endl;
+    cout << "            Register User       " << endl;
     cout << "==============================" << endl;
     cin.ignore();
     cout << "Masukkan Username baru : ";
@@ -969,7 +1020,7 @@ void loginAdmin() {
     string logAdmin, logPw;
     clearScreen();
     cout << "==============================" << endl;
-    cout << "           Login Admin          " << endl;
+    cout << "            Login Admin          " << endl;
     cout << "==============================" << endl;
     cin.ignore();
     cout << "Username : "; getline(cin, logAdmin);
@@ -1007,7 +1058,7 @@ void menuLoginUser() {
     do {
         clearScreen();
         cout << "==========================================" << endl;
-        cout << "            Login/Register User            " << endl;
+        cout << "             Login/Register User            " << endl;
         cout << "==========================================" << endl;
         cout << "1. Login" << endl;
         cout << "2. Register" << endl;
@@ -1061,7 +1112,7 @@ int main() {
     do {
         clearScreen();
         cout << "==============================" << endl;
-        cout << "           Menu Utama          " << endl;
+        cout << "            Menu Utama          " << endl;
         cout << "==============================" << endl;
         cout << "1. Login Admin" << endl;
         cout << "2. Menu User" << endl;
