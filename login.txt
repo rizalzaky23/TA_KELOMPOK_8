@@ -1,5 +1,9 @@
 admin admin123 admin
-rizal rizal123 user
+rizal password user
 budi budi123 user
 dosen pass123 admin
 alea sean user
+122 122 user
+ff ff user
+ee ee user
+zaky 123 user

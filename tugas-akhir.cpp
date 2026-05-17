@@ -24,13 +24,16 @@ lagu* head = NULL;
 lagu* tail = NULL;
 
 void clearScreen() {
+#ifdef _WIN32
     system("cls");
+#else
     system("clear");
+#endif
 }
 
 void pauseScreen() {
     cout << endl << "Tekan Enter untuk melanjutkan...";
-    cin.ignore();
+    while (cin.get() != '\n');
     cin.get();
 }
 
@@ -949,7 +952,9 @@ void loginUser() {
     cout << "==============================" << endl;
     cout << "            Login User         " << endl;
     cout << "==============================" << endl;
-    cin.ignore();
+    
+     while (cin.get() != '\n');
+    
     cout << "Username : "; getline(cin, logUser);
     cout << "Password : "; getline(cin, logPw);
 
@@ -1012,8 +1017,8 @@ void registerUser() {
         fclose(fileTambah);
         cout << "\n Registrasi berhasil!" << endl;
     }
-    pauseScreen();
-    loginUser();
+    pauseScreen();     
+	loginUser();
 }
 
 void loginAdmin() {
