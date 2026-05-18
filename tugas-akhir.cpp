@@ -61,9 +61,9 @@ void tambahLagu() {
     int inputDurasi;
 
     clearScreen();
-    cout << "===============================" << endl;
-    cout << "          TAMBAH LAGU          " << endl;
-    cout << "===============================" << endl;
+    cout << "==================================================" << endl;
+    cout << "                   TAMBAH LAGU                    " << endl;
+    cout << "==================================================" << endl;
 
     cin.ignore();
     cout << "Judul Lagu     : ";
@@ -103,10 +103,10 @@ void tambahLagu() {
 }
 
 void lihatLagu() {
-    clearScreen();
-    cout << "======================================================================" << endl;
-    cout << "                             DAFTAR SEMUA LAGU                        " << endl;
-    cout << "======================================================================" << endl;
+clearScreen();
+    cout << "=================================================================================" << endl;
+    cout << "                                 DAFTAR SEMUA LAGU                               " << endl;
+    cout << "=================================================================================" << endl;
 
     if (head == NULL) {
         cout << endl << "[!] Playlist saat ini masih kosong." << endl;
@@ -134,7 +134,7 @@ void cariLagu() {
     string kataKunci;
     clearScreen();
     cout << "=================================================================================" << endl;
-    cout << "                                    CARI LAGU                                    " << endl;
+    cout << "                                   CARI LAGU                                     " << endl;
     cout << "=================================================================================" << endl;
 
     cin.ignore();
@@ -190,9 +190,9 @@ void quickSortArray(lagu arr[], int low, int high) {
 
 void urutLagu() {
     clearScreen();
-    cout << "=======================================================================" << endl;
-    cout << "                         LIHAT LAGU TERURUT (JUDUL)                    " << endl;
-    cout << "=======================================================================" << endl;
+	cout << "=================================================================================" << endl;
+    cout << "                           LIHAT LAGU TERURUT (JUDUL)                            " << endl;
+    cout << "=================================================================================" << endl;
 
     if (head == NULL) {
         cout << "\n[!] Playlist masih kosong." << endl;
@@ -223,9 +223,9 @@ void urutLagu() {
 
 void editLagu() {
     clearScreen();
-    cout << "=========================================================" << endl;
-    cout << "                        EDIT LAGU                        " << endl;
-    cout << "=========================================================" << endl;
+    cout << "==================================================" << endl;
+    cout << "                     EDIT LAGU                    " << endl;
+    cout << "==================================================" << endl;
 
     if (head == NULL) {
         cout << endl << " Playlist kosong." << endl;
@@ -301,9 +301,9 @@ void editLagu() {
 
 void hapusLagu() {
     clearScreen();
-    cout << "=========================================================" << endl;
-    cout << "                          HAPUS LAGU                             " << endl;
-    cout << "=========================================================" << endl;
+    cout << "==================================================" << endl;
+    cout << "                    HAPUS LAGU                    " << endl;
+    cout << "==================================================" << endl;
 
     if (head == NULL) {
         cout << "\n Playlist kosong." << endl;
@@ -411,10 +411,10 @@ void playLagu(lagu* headPlaylist) {
     string pesan = "";
 
     do {
-        clearScreen();
+clearScreen();
         cout << "=================================================================================" << endl;
-        cout << "                                NOW PLAYING                                      " << endl;
-        cout << "=================================================================================" << endl;
+		cout << "                                    NOW PLAYING                                  " << endl;
+		cout << "=================================================================================" << endl;
         cout << "\n  >> " << current->judul << endl;
         cout << "     Artis  : " << current->artis << endl;
         cout << "     Genre  : " << current->genre << endl;
@@ -462,13 +462,13 @@ void playLagu(lagu* headPlaylist) {
 
 
 void lihatPlaylistPribadi(string username) {
-    clearScreen();
+clearScreen();
     string fileName = "playlist_" + username + ".txt";
     FILE* file = fopen(fileName.c_str(), "r");
 
-    cout << "========================================================================" << endl;
-    cout << "                         PLAYLIST PRIBADI: " << username << endl;
-    cout << "========================================================================" << endl;
+    cout << "=================================================================================" << endl; 
+    cout << "                               PLAYLIST PRIBADI: " << left << setw(53) << username << " " << endl;
+    cout << "=================================================================================" << endl; 
 
     if (file == NULL) {
         cout << "\n[!] Playlist pribadi Anda masih kosong." << endl;
@@ -573,9 +573,9 @@ void playLaguGenre(lagu* laguDipilih) {
 
     do {
         clearScreen();
-        cout << "====================================================================" << endl;
-        cout << "                              NOW PLAYING                           " << endl;
-        cout << "====================================================================" << endl;
+        cout << "==================================================" << endl;
+        cout << "                   NOW PLAYING                    " << endl;
+        cout << "==================================================" << endl;
         cout << "\n  >> " << current->judul << endl;
         cout << "     Artis  : " << current->artis << endl;
         cout << "     Genre  : " << current->genre << endl;
@@ -632,9 +632,9 @@ void playLaguGenre(lagu* laguDipilih) {
 void cariLaguUser() {
     string kataKunci;
     clearScreen();
-    cout << "========================================================================" << endl;
-    cout << "                              CARI LAGU (USER)                          " << endl;
-    cout << "========================================================================" << endl;
+    cout << "=================================================================================" << endl;
+    cout << "                                 CARI LAGU (USER)                                " << endl;
+    cout << "=================================================================================" << endl;
 
     cin.ignore(1000, '\n');
     cout << "Masukkan Judul, Artis, atau Genre: ";
@@ -690,9 +690,9 @@ void cariLaguUser() {
 
     char opsi;
     clearScreen();
-    cout << "=======================================================================" << endl;
-    cout << "                               LAGU DIPILIH                            " << endl;
-    cout << "=======================================================================" << endl;
+    cout << "==================================================" << endl;
+    cout << "                   LAGU DIPILIH                   " << endl;
+    cout << "==================================================" << endl;
     cout << "\n  Judul  : " << hasilCari[pilih - 1]->judul << endl;
     cout << "  Artis  : " << hasilCari[pilih - 1]->artis << endl;
     cout << "  Genre  : " << hasilCari[pilih - 1]->genre << endl;
@@ -716,9 +716,9 @@ void urutkanPlaylistPribadi(string username) {
     string fileName = "playlist_" + username + ".txt";
     FILE* file = fopen(fileName.c_str(), "r");
 
-    cout << "================================================================" << endl;
-    cout << "                    URUTKAN PLAYLIST PRIBADI                    " << endl;
-    cout << "================================================================" << endl;
+	cout << "=================================================================================" << endl;
+    cout << "                             URUTKAN PLAYLIST PRIBADI                            " << endl;
+    cout << "=================================================================================" << endl;
 
     if (file == NULL) {
         cout << "\n[!] Playlist pribadi Anda masih kosong." << endl;
@@ -762,9 +762,9 @@ void hapusLaguPlaylist(string username) {
     string fileName = "playlist_" + username + ".txt";
     FILE* file = fopen(fileName.c_str(), "r");
 
-    cout << "================================================================" << endl;
-    cout << "                      HAPUS LAGU DI PLAYLIST                    " << endl;
-    cout << "================================================================" << endl;
+    cout << "==================================================" << endl;
+    cout << "              HAPUS LAGU DI PLAYLIST              " << endl;
+    cout << "==================================================" << endl;
 
     if (file == NULL) {
         cout << "\n[!] Playlist pribadi Anda masih kosong." << endl;
@@ -821,9 +821,9 @@ void hapusLaguPlaylist(string username) {
 void gantiPassword(string username) {
     string pwLama, pwBaru;
     clearScreen();
-    cout << "==============================" << endl;
-    cout << "       Ganti Password         " << endl;
-    cout << "==============================" << endl;
+    cout << "==================================================" << endl;
+    cout << "                  GANTI PASSWORD                  " << endl;
+    cout << "==================================================" << endl;
     cout << "Masukkan Password Lama: "; cin >> pwLama;
 
     FILE* file = fopen("login.txt", "r");
@@ -870,9 +870,9 @@ void menuUser(string username) {
     int pilihMenu;
     do {
         clearScreen();
-        cout << "===============================" << endl;
-        cout << "      MENU USER: " << username << endl;
-        cout << "===============================" << endl;
+        cout << "==================================================" << endl;
+        cout << "                   MENU USER: " << left << setw(29) << username << endl;
+        cout << "==================================================" << endl;
         cout << "1. Lihat Semua Lagu" << endl;
         cout << "2. Lihat Playlist Pribadi" << endl;
         cout << "3. Tambah Lagu Ke Playlist Pribadi" << endl;
@@ -912,10 +912,10 @@ void menuUser(string username) {
 void menuAdmin() {
     int pilihMenu;
     do {
-        clearScreen();
-        cout << "===============================" << endl;
-        cout << "            MENU ADMIN          " << endl;
-        cout << "===============================" << endl;
+clearScreen();
+        cout << "==================================================" << endl;
+        cout << "                    MENU ADMIN                    " << endl;
+        cout << "==================================================" << endl;
         cout << "1. Tambah Lagu" << endl;
         cout << "2. Lihat Lagu" << endl;
         cout << "3. Cari Lagu" << endl;
@@ -949,9 +949,9 @@ void menuAdmin() {
 void loginUser() {
     string logUser, logPw;
     clearScreen();
-    cout << "==============================" << endl;
-    cout << "            Login User         " << endl;
-    cout << "==============================" << endl;
+    cout << "==================================================" << endl;
+    cout << "                    LOGIN USER                    " << endl;
+    cout << "==================================================" << endl;
     
      while (cin.get() != '\n');
     
@@ -988,9 +988,9 @@ void loginUser() {
 void registerUser() {
     string regUser, regPw;
     clearScreen();
-    cout << "==============================" << endl;
-    cout << "            Register User       " << endl;
-    cout << "==============================" << endl;
+    cout << "==================================================" << endl;
+    cout << "                  REGISTER USER                   " << endl;
+    cout << "==================================================" << endl;
     cin.ignore();
     cout << "Masukkan Username baru : ";
     getline(cin, regUser);
@@ -1023,10 +1023,10 @@ void registerUser() {
 
 void loginAdmin() {
     string logAdmin, logPw;
-    clearScreen();
-    cout << "==============================" << endl;
-    cout << "            Login Admin          " << endl;
-    cout << "==============================" << endl;
+clearScreen();
+    cout << "==================================================" << endl;
+    cout << "                   LOGIN ADMIN                    " << endl;
+    cout << "==================================================" << endl;
     cin.ignore();
     cout << "Username : "; getline(cin, logAdmin);
     cout << "Password : "; getline(cin, logPw);
@@ -1061,10 +1061,10 @@ void loginAdmin() {
 void menuLoginUser() {
     int pilihLogin;
     do {
-        clearScreen();
-        cout << "==========================================" << endl;
-        cout << "             Login/Register User            " << endl;
-        cout << "==========================================" << endl;
+clearScreen();
+        cout << "==================================================" << endl;
+        cout << "               LOGIN/REGISTER USER                " << endl;
+        cout << "==================================================" << endl;
         cout << "1. Login" << endl;
         cout << "2. Register" << endl;
         cout << "3. Kembali" << endl;
@@ -1115,10 +1115,10 @@ int main() {
     loadLagu();
     int pilihLogin;
     do {
-        clearScreen();
-        cout << "==============================" << endl;
-        cout << "            Menu Utama          " << endl;
-        cout << "==============================" << endl;
+clearScreen();
+        cout << "==================================================" << endl;
+        cout << "                    MENU UTAMA                    " << endl;
+        cout << "==================================================" << endl;
         cout << "1. Login Admin" << endl;
         cout << "2. Menu User" << endl;
         cout << "3. Keluar" << endl;

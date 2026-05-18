@@ -3,3 +3,4 @@ black dog,led zeppelin,hard rock,296
 material girl,madonna,synthpop,240
 perfect,ed sheeran,pop,263
 bad romance,lady gaga,dance pop,294
+roar,katy perry,pop,223
