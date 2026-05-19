@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <stdlib.h>
-
+#include <string>
 
 using namespace std;
 
@@ -33,8 +33,8 @@ void clearScreen() {
 
 void pauseScreen() {
     cout << endl << "Tekan Enter untuk melanjutkan...";
-    while (cin.get() != '\n');
-    cin.get();
+    string dummy;
+    getline(cin, dummy);
 }
 
 string formatDuration(int seconds) {
@@ -62,10 +62,9 @@ void tambahLagu() {
 
     clearScreen();
     cout << "==================================================" << endl;
-    cout << "                   TAMBAH LAGU                    " << endl;
+    cout << "                  TAMBAH LAGU                    " << endl;
     cout << "==================================================" << endl;
 
-    cin.ignore();
     cout << "Judul Lagu     : ";
     getline(cin, inputJudul);
     cout << "Nama Artis     : ";
@@ -73,7 +72,11 @@ void tambahLagu() {
     cout << "Genre Lagu     : ";
     getline(cin, inputGenre);
     cout << "Durasi (detik) : ";
-    cin >> inputDurasi;
+    if (!(cin >> inputDurasi)) {
+        cin.clear();
+        inputDurasi = 0;
+    }
+    cin.ignore(10000, '\n');
 
     lagu* laguBaru = new lagu;
     laguBaru->judul = inputJudul;
@@ -103,9 +106,9 @@ void tambahLagu() {
 }
 
 void lihatLagu() {
-clearScreen();
+    clearScreen();
     cout << "=================================================================================" << endl;
-    cout << "                                 DAFTAR SEMUA LAGU                               " << endl;
+    cout << "                                DAFTAR SEMUA LAGU                                " << endl;
     cout << "=================================================================================" << endl;
 
     if (head == NULL) {
@@ -137,7 +140,6 @@ void cariLagu() {
     cout << "                                   CARI LAGU                                     " << endl;
     cout << "=================================================================================" << endl;
 
-    cin.ignore();
     cout << "Masukkan Judul, Artis, atau Genre: ";
     getline(cin, kataKunci);
 
@@ -190,7 +192,7 @@ void quickSortArray(lagu arr[], int low, int high) {
 
 void urutLagu() {
     clearScreen();
-	cout << "=================================================================================" << endl;
+    cout << "=================================================================================" << endl;
     cout << "                           LIHAT LAGU TERURUT (JUDUL)                            " << endl;
     cout << "=================================================================================" << endl;
 
@@ -224,7 +226,7 @@ void urutLagu() {
 void editLagu() {
     clearScreen();
     cout << "==================================================" << endl;
-    cout << "                     EDIT LAGU                    " << endl;
+    cout << "                    EDIT LAGU                    " << endl;
     cout << "==================================================" << endl;
 
     if (head == NULL) {
@@ -234,7 +236,6 @@ void editLagu() {
     }
 
     string judulCari;
-    cin.ignore();
     cout << "Masukkan Judul Lagu yang ingin diedit: ";
     getline(cin, judulCari);
 
@@ -279,7 +280,12 @@ void editLagu() {
     if (!inputBaru.empty()) bantu->genre = inputBaru;
 
     cout << "Durasi baru (detik, 0 jika tidak diubah): ";
-    cin >> durasiInput;
+    if (!(cin >> durasiInput)) {
+        cin.clear();
+        durasiInput = 0;
+    }
+    cin.ignore(10000, '\n');
+    
     if (durasiInput > 0) bantu->durasi = durasiInput;
 
     FILE* fileOut = fopen("playlist.txt", "w");
@@ -298,7 +304,6 @@ void editLagu() {
     pauseScreen();
 }
 
-
 void hapusLagu() {
     clearScreen();
     cout << "==================================================" << endl;
@@ -312,7 +317,6 @@ void hapusLagu() {
     }
 
     string judulHapus;
-    cin.ignore();
     cout << "Masukkan Judul Lagu yang ingin dihapus: ";
     getline(cin, judulHapus);
 
@@ -375,7 +379,6 @@ void tambahPlaylist(string username) {
     }
 
     cout << "\nMasukkan Judul Lagu untuk ditambah ke Playlist Anda: ";
-    cin.ignore();
     getline(cin, judulPilih);
 
     temp = head;
@@ -411,10 +414,10 @@ void playLagu(lagu* headPlaylist) {
     string pesan = "";
 
     do {
-clearScreen();
+        clearScreen();
         cout << "=================================================================================" << endl;
-		cout << "                                    NOW PLAYING                                  " << endl;
-		cout << "=================================================================================" << endl;
+        cout << "                                   NOW PLAYING                                   " << endl;
+        cout << "=================================================================================" << endl;
         cout << "\n  >> " << current->judul << endl;
         cout << "     Artis  : " << current->artis << endl;
         cout << "     Genre  : " << current->genre << endl;
@@ -441,6 +444,7 @@ clearScreen();
 
         cout << "  Input: ";
         cin >> input;
+        cin.ignore(10000, '\n');
         input = tolower(input);
 
         if (input == 'n') {
@@ -460,14 +464,13 @@ clearScreen();
     } while (input != 'q');
 }
 
-
 void lihatPlaylistPribadi(string username) {
-clearScreen();
+    clearScreen();
     string fileName = "playlist_" + username + ".txt";
     FILE* file = fopen(fileName.c_str(), "r");
 
     cout << "=================================================================================" << endl; 
-    cout << "                               PLAYLIST PRIBADI: " << left << setw(53) << username << " " << endl;
+    cout << "                                PLAYLIST PRIBADI: " << left << setw(53) << username << " " << endl;
     cout << "=================================================================================" << endl; 
 
     if (file == NULL) {
@@ -519,11 +522,16 @@ clearScreen();
 
     cout << "---------------------------------------------------------------------------------" << endl;
 
-    cout << "\nTekan Enter untuk mulai memutar playlist...";
-    cin.ignore();
-    cin.get();
+    char opsi;
+    cout << "\n  [P] Play Playlist   [Q] Quit / Kembali" << endl;
+    cout << "  Input: ";
+    cin >> opsi;
+    cin.ignore(10000, '\n');
+    opsi = tolower(opsi);
 
-    playLagu(headPribadi);
+    if (opsi == 'p') {
+        playLagu(headPribadi);
+    }
 
     lagu* curr = headPribadi;
     while (curr != NULL) {
@@ -574,7 +582,7 @@ void playLaguGenre(lagu* laguDipilih) {
     do {
         clearScreen();
         cout << "==================================================" << endl;
-        cout << "                   NOW PLAYING                    " << endl;
+        cout << "                  NOW PLAYING                    " << endl;
         cout << "==================================================" << endl;
         cout << "\n  >> " << current->judul << endl;
         cout << "     Artis  : " << current->artis << endl;
@@ -603,6 +611,7 @@ void playLaguGenre(lagu* laguDipilih) {
 
         cout << "  Input: ";
         cin >> input;
+        cin.ignore(10000, '\n');
         input = tolower(input);
 
         if (input == 'n') {
@@ -633,10 +642,9 @@ void cariLaguUser() {
     string kataKunci;
     clearScreen();
     cout << "=================================================================================" << endl;
-    cout << "                                 CARI LAGU (USER)                                " << endl;
+    cout << "                                CARI LAGU (USER)                                 " << endl;
     cout << "=================================================================================" << endl;
 
-    cin.ignore(1000, '\n');
     cout << "Masukkan Judul, Artis, atau Genre: ";
     getline(cin, kataKunci);
 
@@ -680,7 +688,11 @@ void cariLaguUser() {
 
     cout << "\nPilih nomor lagu untuk diputar, atau 0 untuk kembali: ";
     int pilih;
-    cin >> pilih;
+    if (!(cin >> pilih)) {
+        cin.clear();
+        pilih = -1;
+    }
+    cin.ignore(10000, '\n');
 
     if (pilih < 1 || pilih > jumlahHasil) {
         if (pilih != 0) cout << "\n[!] Nomor tidak valid." << endl;
@@ -691,7 +703,7 @@ void cariLaguUser() {
     char opsi;
     clearScreen();
     cout << "==================================================" << endl;
-    cout << "                   LAGU DIPILIH                   " << endl;
+    cout << "                  LAGU DIPILIH                    " << endl;
     cout << "==================================================" << endl;
     cout << "\n  Judul  : " << hasilCari[pilih - 1]->judul << endl;
     cout << "  Artis  : " << hasilCari[pilih - 1]->artis << endl;
@@ -702,6 +714,7 @@ void cariLaguUser() {
     cout << "  [P] Play   [Q] Quit" << endl;
     cout << "  Input: ";
     cin >> opsi;
+    cin.ignore(10000, '\n');
     opsi = tolower(opsi);
 
     if (opsi == 'p') {
@@ -716,7 +729,7 @@ void urutkanPlaylistPribadi(string username) {
     string fileName = "playlist_" + username + ".txt";
     FILE* file = fopen(fileName.c_str(), "r");
 
-	cout << "=================================================================================" << endl;
+    cout << "=================================================================================" << endl;
     cout << "                             URUTKAN PLAYLIST PRIBADI                            " << endl;
     cout << "=================================================================================" << endl;
 
@@ -798,7 +811,11 @@ void hapusLaguPlaylist(string username) {
 
     int pilihan;
     cout << "\nPilih nomor lagu yang ingin dihapus (0 untuk batal): ";
-    cin >> pilihan;
+    if (!(cin >> pilihan)) {
+        cin.clear();
+        pilihan = -1;
+    }
+    cin.ignore(10000, '\n');
 
     if (pilihan > 0 && pilihan <= jumlah) {
         FILE* fileWrite = fopen(fileName.c_str(), "w");
@@ -825,6 +842,7 @@ void gantiPassword(string username) {
     cout << "                  GANTI PASSWORD                  " << endl;
     cout << "==================================================" << endl;
     cout << "Masukkan Password Lama: "; cin >> pwLama;
+    cin.ignore(10000, '\n');
 
     FILE* file = fopen("login.txt", "r");
     if (file == NULL) return;
@@ -850,6 +868,7 @@ void gantiPassword(string username) {
 
     if (valid) {
         cout << "Masukkan Password Baru: "; cin >> pwBaru;
+        cin.ignore(10000, '\n');
         FILE* fileUpdate = fopen("login.txt", "w");
         for (int i = 0; i < count; i++) {
             if (users[i].user == username) {
@@ -882,7 +901,13 @@ void menuUser(string username) {
         cout << "7. Hapus Lagu di Playlist" << endl;
         cout << "8. Ganti Password" << endl;
         cout << "0. Kembali" << endl;
-        cout << "Pilih Menu : "; cin >> pilihMenu;
+        cout << "Pilih Menu : "; 
+        
+        if (!(cin >> pilihMenu)) {
+            cin.clear();
+            pilihMenu = -1;
+        }
+        cin.ignore(10000, '\n');
 
         switch(pilihMenu) {
             case 1: lihatLagu(); 
@@ -912,7 +937,7 @@ void menuUser(string username) {
 void menuAdmin() {
     int pilihMenu;
     do {
-clearScreen();
+        clearScreen();
         cout << "==================================================" << endl;
         cout << "                    MENU ADMIN                    " << endl;
         cout << "==================================================" << endl;
@@ -923,7 +948,13 @@ clearScreen();
         cout << "5. Edit Lagu" << endl;
         cout << "6. Hapus Lagu" << endl;
         cout << "0. Kembali" << endl;
-        cout << "Pilih Menu : "; cin >> pilihMenu;
+        cout << "Pilih Menu : "; 
+        
+        if (!(cin >> pilihMenu)) {
+            cin.clear();
+            pilihMenu = -1;
+        }
+        cin.ignore(10000, '\n');
 
         switch(pilihMenu) {
             case 1: tambahLagu(); 
@@ -952,8 +983,6 @@ void loginUser() {
     cout << "==================================================" << endl;
     cout << "                    LOGIN USER                    " << endl;
     cout << "==================================================" << endl;
-    
-     while (cin.get() != '\n');
     
     cout << "Username : "; getline(cin, logUser);
     cout << "Password : "; getline(cin, logPw);
@@ -991,7 +1020,7 @@ void registerUser() {
     cout << "==================================================" << endl;
     cout << "                  REGISTER USER                   " << endl;
     cout << "==================================================" << endl;
-    cin.ignore();
+    
     cout << "Masukkan Username baru : ";
     getline(cin, regUser);
 
@@ -1010,6 +1039,7 @@ void registerUser() {
     }
 
     cout << "Masukkan Password baru : "; cin >> regPw;
+    cin.ignore(10000, '\n');
 
     FILE* fileTambah = fopen("login.txt", "a");
     if (fileTambah != NULL) {
@@ -1018,16 +1048,16 @@ void registerUser() {
         cout << "\n Registrasi berhasil!" << endl;
     }
     pauseScreen();     
-	loginUser();
+    loginUser();
 }
 
 void loginAdmin() {
     string logAdmin, logPw;
-clearScreen();
+    clearScreen();
     cout << "==================================================" << endl;
     cout << "                   LOGIN ADMIN                    " << endl;
     cout << "==================================================" << endl;
-    cin.ignore();
+    
     cout << "Username : "; getline(cin, logAdmin);
     cout << "Password : "; getline(cin, logPw);
 
@@ -1061,14 +1091,20 @@ clearScreen();
 void menuLoginUser() {
     int pilihLogin;
     do {
-clearScreen();
+        clearScreen();
         cout << "==================================================" << endl;
         cout << "               LOGIN/REGISTER USER                " << endl;
         cout << "==================================================" << endl;
         cout << "1. Login" << endl;
         cout << "2. Register" << endl;
         cout << "3. Kembali" << endl;
-        cout << "Pilih : "; cin >> pilihLogin;
+        cout << "Pilih : "; 
+        
+        if (!(cin >> pilihLogin)) {
+            cin.clear();
+            pilihLogin = -1;
+        }
+        cin.ignore(10000, '\n');
 
         switch(pilihLogin) {
             case 1: loginUser(); 
@@ -1115,14 +1151,20 @@ int main() {
     loadLagu();
     int pilihLogin;
     do {
-clearScreen();
+        clearScreen();
         cout << "==================================================" << endl;
         cout << "                    MENU UTAMA                    " << endl;
         cout << "==================================================" << endl;
         cout << "1. Login Admin" << endl;
         cout << "2. Menu User" << endl;
         cout << "3. Keluar" << endl;
-        cout << "Pilih : "; cin >> pilihLogin;
+        cout << "Pilih : "; 
+        
+        if (!(cin >> pilihLogin)) {
+            cin.clear();
+            pilihLogin = -1;
+        }
+        cin.ignore(10000, '\n');
 
         switch(pilihLogin) {
             case 1 : loginAdmin(); 
